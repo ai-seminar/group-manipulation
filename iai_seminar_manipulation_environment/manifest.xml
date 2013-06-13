@@ -9,6 +9,11 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/iai_seminar_manipulation_environment</url>
 
+  <depend package="gazebo_worlds"/>
+  <depend package="pr2_description"/>
+  <depend package="pr2_controller_manager"/>
+  <depend package="pr2_controller_configuration_gazebo"/>
+
 </package>
 
 

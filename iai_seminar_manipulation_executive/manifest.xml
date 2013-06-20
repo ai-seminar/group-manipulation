@@ -1,0 +1,16 @@
+<package>
+  <description brief="iai_seminar_manipulation_executive">
+
+     iai_seminar_manipulation_executive
+
+  </description>
+  <author>Thomas</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/iai_seminar_manipulation_executive</url>
+
+  <depend package="roscpp"/>
+
+</package>
+
+

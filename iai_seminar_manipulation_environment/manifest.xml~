@@ -1,0 +1,16 @@
+<package>
+  <description brief="iai_seminar_manipulation_environment">
+
+     iai_seminar_manipulation_environment
+
+  </description>
+  <author>ichumuh</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/iai_seminar_manipulation_environment</url>
+
+  <depend package="gazebo_worlds" />
+
+</package>
+
+

@@ -1,0 +1,18 @@
+<package>
+  <description brief="iai_seminar_manipulation_environment">
+
+     iai_seminar_manipulation_environment
+
+  </description>
+  <author>benny</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/iai_seminar_manipulation_environment</url>
+
+  <depend package="pr2_description"/>
+  <depend package="pr2_controller_manager"/>
+  <depend package="pr2_controller_configuration_gazebo"/>
+
+</package>
+
+

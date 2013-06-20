@@ -1,0 +1,5 @@
+<launch>
+
+  <include file="$(find iai_seminar_manipulation_environment)/launch/gazebo_empty_world.launch"/>
+  <include file="$(find iai_seminar_manipulation_environment)/launch/pr2_leightweight.launch"/>
+</launch>

@@ -31,3 +31,6 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 #add executable manipulation_executive
 rosbuild_add_executable(manipulation_executive src/main.cpp)
+
+#add executable for RobotArm
+rosbuild_add_executable(robot_arm src/RobotArm.cpp)

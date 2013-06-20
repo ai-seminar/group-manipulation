@@ -1,0 +1,8 @@
+<launch>
+
+	<!-- Setting up the very first node -->
+
+	<node pkg="iai_seminar_manipulation_executive" type="talker" name="	manipulation_executive">
+	<!-- <param name="message" /> -->	
+	</node>
+</launch>

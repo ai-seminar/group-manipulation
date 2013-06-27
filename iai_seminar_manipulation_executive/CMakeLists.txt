@@ -29,8 +29,14 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_add_executable(example examples/example.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
 
+rosbuild_add_boost_directories()
+
 #add executable manipulation_executive
 rosbuild_add_executable(manipulation_executive src/main.cpp)
 
 #add executable for RobotArm
 rosbuild_add_executable(robot_arm src/RobotArm.cpp)
+
+#rosbuild_add_boost_directories()
+rosbuild_link_boost(manipulation_executive thread)
+rosbuild_link_boost(robot_arm thread)

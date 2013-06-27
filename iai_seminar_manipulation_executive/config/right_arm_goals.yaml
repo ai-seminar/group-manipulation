@@ -1,0 +1,26 @@
+first_goal_configuration:
+  joints:
+    - r_shoulder_pan_joint
+    - r_shoulder_lift_joint
+    - r_upper_arm_roll_joint
+    - r_elbow_flex_joint
+    - r_forearm_roll_joint
+    - r_wrist_flex_joint
+    - r_wrist_roll_joint
+  positions:
+    - -1.05
+    - -0.1
+    - -0.61
+    - -0.44
+    - 5.6
+    - -0.86
+    - 0.16
+  velocities:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+  execution_time: 6.0

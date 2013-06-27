@@ -1,0 +1,18 @@
+<package>
+  <description brief="iai_seminar_manipulation_utils">
+
+     iai_seminar_manipulation_utils
+
+  </description>
+  <author>ichumuh</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/iai_seminar_manipulation_utils</url>
+  <depend package="roscpp"/>
+  <export>
+     <cpp cflags="-I${prefix}/include" lflags="-L${prefix}/lib -liai_seminar_manipulation_utils"/>
+  </export>
+
+</package>
+
+

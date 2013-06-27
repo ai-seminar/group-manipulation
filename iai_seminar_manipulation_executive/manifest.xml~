@@ -1,0 +1,18 @@
+<package>
+  <description brief="iai_seminar_manipulation_executive">
+
+     iai_seminar_manipulation_executive
+
+  </description>
+  <author>ichumuh</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/iai_seminar_manipulation_executive</url>
+
+  <depend package="roscpp" />
+  <depend package="pr2_controllers_msgs" />
+  <depend package="actionlib" />
+
+</package>
+
+

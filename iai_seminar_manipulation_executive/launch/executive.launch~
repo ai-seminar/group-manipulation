@@ -1,0 +1,5 @@
+<launch>
+	<node pkg="iai_seminar_manipulation_executive" type="manipulation_executive" name="left" ns="l_arm_controller/joint_trajectory_action" output="screen"/>
+	<rosparam file="$(find iai_seminar_manipulation_executive)/config/left_arm_goals.yaml" ns="l_arm_controller/joint_trajectory_action" command="load" />
+	<rosparam file="$(find iai_seminar_manipulation_executive)/config/right_arm_goals.yaml" ns="r_arm_controller/joint_trajectory_action" command="load" />
+</launch>

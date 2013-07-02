@@ -89,28 +89,6 @@ bool RobotArm::startTrajectory(){
 
 
 
-/*
-Umwandlung von »
-std::vector<std::basic_string<char> >::const_iterator 
-{aka __gnu_cxx::__normal_iterator<const std::basic_string<char>*, 
-std::vector<std::basic_string<char> > >}« 
-
-in nicht-skalaren Typen 
-»std::vector<std::basic_string<char> >::iterator 
-{aka __gnu_cxx::__normal_iterator<std::basic_string<char>*, 
-std::vector<std::basic_string<char> > >}« angefordert
-
-»std::vector<std::basic_string<char> >::const_iterator 
-{aka __gnu_cxx::__normal_iterator<const std::basic_string<char>*, 
-std::vector<std::basic_string<char> > >}« 
-in nicht-skalaren Typen 
-»const iterator {aka const __gnu_cxx::__normal_iterator<std::basic_string<char>*, std::vector<std::basic_string<char> > >}« angefordert
-*/
-
-
-
-
-
 
 
 

@@ -10,7 +10,7 @@ include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 #set(ROS_BUILD_TYPE RelWithDebInfo)
 
 rosbuild_init()
-rosbuild_add_boost_directories()
+#rosbuild_add_boost_directories()
 #set the default path for built executables to the "bin" directory
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
@@ -30,7 +30,8 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #target_link_libraries(example ${PROJECT_NAME})
 
 rosbuild_add_executable(manipulation_executive src/main.cpp 
-					       src/RobotArm.cpp)
+					       src/RobotArm.cpp
+					       ../../iai_seminar_manipulation_utils/src/ParameterServerUtils.cpp)
 #rosbuild_add_executable(RobotArm src/RobotArm.cpp)
 rosbuild_link_boost(manipulation_executive thread)
 #rosbuild_link_boost(RobotArm thread)

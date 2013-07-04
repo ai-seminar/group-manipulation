@@ -8,6 +8,7 @@
 /home/tom/Development/group_knowledge/iai_seminar_manipulation_environment/build/CMakeFiles/rospack_genmsg.dir
 /home/tom/Development/group_knowledge/iai_seminar_manipulation_environment/build/CMakeFiles/rospack_genmsg_libexe.dir
 /home/tom/Development/group_knowledge/iai_seminar_manipulation_environment/build/CMakeFiles/rospack_gensrv.dir
+/home/tom/Development/group_knowledge/iai_seminar_manipulation_environment/build/CMakeFiles/simple_trajectory.dir
 /home/tom/Development/group_knowledge/iai_seminar_manipulation_environment/build/CMakeFiles/test.dir
 /home/tom/Development/group_knowledge/iai_seminar_manipulation_environment/build/CMakeFiles/test-future.dir
 /home/tom/Development/group_knowledge/iai_seminar_manipulation_environment/build/CMakeFiles/test-results.dir

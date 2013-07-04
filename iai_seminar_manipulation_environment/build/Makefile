@@ -226,6 +226,19 @@ rospack_gensrv/fast:
 .PHONY : rospack_gensrv/fast
 
 #=============================================================================
+# Target rules for targets named simple_trajectory
+
+# Build rule for target.
+simple_trajectory: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 simple_trajectory
+.PHONY : simple_trajectory
+
+# fast build rule for target.
+simple_trajectory/fast:
+	$(MAKE) -f CMakeFiles/simple_trajectory.dir/build.make CMakeFiles/simple_trajectory.dir/build
+.PHONY : simple_trajectory/fast
+
+#=============================================================================
 # Target rules for targets named test
 
 # Build rule for target.
@@ -290,6 +303,21 @@ tests/fast:
 	$(MAKE) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
 .PHONY : tests/fast
 
+# target to build an object file
+src/simple_trajectory.o:
+	$(MAKE) -f CMakeFiles/simple_trajectory.dir/build.make CMakeFiles/simple_trajectory.dir/src/simple_trajectory.o
+.PHONY : src/simple_trajectory.o
+
+# target to preprocess a source file
+src/simple_trajectory.i:
+	$(MAKE) -f CMakeFiles/simple_trajectory.dir/build.make CMakeFiles/simple_trajectory.dir/src/simple_trajectory.i
+.PHONY : src/simple_trajectory.i
+
+# target to generate assembly for a file
+src/simple_trajectory.s:
+	$(MAKE) -f CMakeFiles/simple_trajectory.dir/build.make CMakeFiles/simple_trajectory.dir/src/simple_trajectory.s
+.PHONY : src/simple_trajectory.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -308,11 +336,15 @@ help:
 	@echo "... rospack_genmsg"
 	@echo "... rospack_genmsg_libexe"
 	@echo "... rospack_gensrv"
+	@echo "... simple_trajectory"
 	@echo "... test"
 	@echo "... test-future"
 	@echo "... test-results"
 	@echo "... test-results-run"
 	@echo "... tests"
+	@echo "... src/simple_trajectory.o"
+	@echo "... src/simple_trajectory.i"
+	@echo "... src/simple_trajectory.s"
 .PHONY : help
 
 

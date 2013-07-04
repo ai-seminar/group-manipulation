@@ -1,0 +1,17 @@
+<package>
+  <description brief="iai_seminar_manipulation_executive">
+
+     iai_seminar_manipulation_executive
+
+  </description>
+  <author>benny</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>hhttps://github.com/ai-seminar/group-manipulation/wiki/iai_seminar_manipulation_executive</url>
+  <depend package="roscpp"/>
+  <depend package="actionlib"/>
+  <depend package="pr2_controllers_msgs"/>
+
+</package>
+
+

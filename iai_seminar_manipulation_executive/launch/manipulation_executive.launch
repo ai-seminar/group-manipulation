@@ -1,3 +1,5 @@
 <launch>
 	<node pkg="iai_seminar_manipulation_executive" type="manipulation_executive" name="manipulation_executive"/>
+	<node pkg="iai_seminar_manipulation_executive" type="robot_arm" name="arm_action"/>
+	<remap from="arm_action" to="l_arm_controller"/>
 </launch>

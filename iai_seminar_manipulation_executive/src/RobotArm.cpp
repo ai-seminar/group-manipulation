@@ -9,7 +9,7 @@ typedef actionlib::SimpleActionClient< pr2_controllers_msgs::JointTrajectoryActi
 TrajClient* traj_client_;
 
 RobotArm::RobotArm(ros::NodeHandle& n, const std::string& name){
-	traj_client_ = new TrajClient("r_arm_controller/joint_trajectory_action", true);
+	traj_client_ = new TrajClient("l_arm_controller/joint_trajectory_action", true);
 }
 
 bool RobotArm::initGoal(const std::vector<std::string>& joint_names, const std::vector<double>& joint_goals,

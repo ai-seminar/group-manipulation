@@ -23,7 +23,14 @@ bool IaiSeminarMultiJointPositionController::init(pr2_mechanism_model::RobotStat
 	
 	for(size_t i=0; i < joints.size(); ++i)
 	{
-		this->joints_.push_back(robot->getJointState(joints[i]));
+		pr2_mechanism_model::JointState* js = robot->getJointState(joints[i]);
+		if(!js)
+		{
+			// Error while initialising joint "joints[i]"
+			ROS_ERROR("IaiSeminarMultiJointPositionController could not find joint '%s'", joints[i].c_str());
+			return false;
+		}
+		this->joints_.push_back(js);
 	}
 
 	// Initialize realtime_publisher
@@ -41,7 +48,17 @@ void IaiSeminarMultiJointPositionController::starting()
 
 void IaiSeminarMultiJointPositionController::update()
 {
-
+	if(this->realtime_publisher_.trylock())
+	{
+		// Update current position of joints
+		for(size_t i=0; i < this->joints_.size(); ++i)
+		{
+			this->realtime_publisher_.msg_.actual.positions.push_back(this->joints_[i]->position_);
+			this->realtime_publisher_.msg_.actual.velocities.push_back(this->joints_[i]->velocity_);
+		}
+		// Publish
+		this->realtime_publisher_.unlockAndPublish();
+	}
 }
 
 void IaiSeminarMultiJointPositionController::stopping()

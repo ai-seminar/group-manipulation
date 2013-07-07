@@ -1,0 +1,5 @@
+<library path="lib/libiai_seminar_manipulation_controllers">
+  <class name="iai_seminar_manipulation_controllers/IaiSeminarMultiJointPositionController"
+         type="IaiSeminarMultiJointPositionController"
+         base_class_type="pr2_controller_interface::Controller" />
+</library>

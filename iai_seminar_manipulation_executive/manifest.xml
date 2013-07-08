@@ -7,7 +7,7 @@
   <author>ichumuh</author>
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
-  <url>http://ros.org/wiki/iai_seminar_manipulation_executive</url>
+  <url>https://github.com/ai-seminar/group-manipulation/wiki/</url>
 
   <depend package="roscpp" />
   <depend package="pr2_controllers_msgs" />

@@ -7,7 +7,7 @@
   <author>ichumuh</author>
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
-  <url>http://ros.org/wiki/iai_seminar_manipulation_environment</url>
+  <url>https://github.com/ai-seminar/group-manipulation/wiki/</url>
 
   <depend package="gazebo_worlds" />
   <depend package="pr2_description" />

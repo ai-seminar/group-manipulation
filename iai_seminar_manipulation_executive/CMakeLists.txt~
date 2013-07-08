@@ -31,7 +31,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 rosbuild_add_executable(manipulation_executive src/main.cpp 
 					       src/RobotArm.cpp
-					       ../../iai_seminar_manipulation_utils/src/ParameterServerUtils.cpp)
+					       ../iai_seminar_manipulation_utils/src/ParameterServerUtils.cpp)
 #rosbuild_add_executable(RobotArm src/RobotArm.cpp)
 rosbuild_link_boost(manipulation_executive thread)
 #rosbuild_link_boost(RobotArm thread)

@@ -1,5 +1,5 @@
 #include <../include/iai_seminar_manipulation_executive/RobotArm.h>
-
+#include <../../iai_seminar_manipulation_utils/include/iai_seminar_manipulation_utils/ParameterServerUtils.h>
 
 using namespace std;
 using namespace ros;
@@ -16,27 +16,10 @@ bool RobotArm::initGoal(const std::vector<std::string>& joint_names, const std::
 		goal_.trajectory.joint_names.push_back(*it);
 	}
     
-    // We will have two waypoints in this goal trajectory
-    goal_.trajectory.points.resize(2);
+    goal_.trajectory.points.resize(1);
     int ind = 0;
-    goal_.trajectory.points[ind].positions.resize(joint_goals.size());
- 	for (size_t i = 0 ; i<joint_goals.size(); ++i){
-		goal_.trajectory.points[ind].positions[i] = 0.0;
-	}  
-	
-    // Velocities
-    goal_.trajectory.points[ind].velocities.resize(joint_goal_velocities.size());
-    for (size_t j = 0; j < joint_goals.size(); ++j)
-    {
-      goal_.trajectory.points[ind].velocities[j] = 0.0;
-    }
-    // To be reached 1 second after starting along the trajectory
-    goal_.trajectory.points[ind].time_from_start = ros::Duration(1.0);
-    
-    
-    // Second trajectory point
+
     // Positions
-    ind += 1;
     int i = 0;
     goal_.trajectory.points[ind].positions.resize(joint_goals.size());
     
@@ -52,16 +35,32 @@ bool RobotArm::initGoal(const std::vector<std::string>& joint_names, const std::
 	}    
 
     // To be reached 2 seconds after starting along the trajectory
-    goal_.trajectory.points[ind].time_from_start = ros::Duration(2.0);
+    goal_.trajectory.points[ind].time_from_start = ros::Duration(1.0);
 
 	goal_.trajectory.header.stamp = ros::Time::now() + ros::Duration(duration);
     //we are done; return the goal
-    //return goal;
+    
 	return true;
 }
 
 bool RobotArm::initGoal(ros::NodeHandle& n){
-	return false;
+	//get joints
+	std::vector<std::string>joint;
+	loadStringVectorFromParameterServer(n,"/first_goal_configuration/joints",joint);
+
+	//get positions
+	std::vector<double>positions;
+	loadDoubleVectorFromParameterServer(n,"/first_goal_configuration/positions",positions);
+	
+	//get velocities
+	std::vector<double>velocities;
+	loadDoubleVectorFromParameterServer(n,"/first_goal_configuration/velocities",velocities);
+	
+	//get executiontime
+	double execution_time;
+	loadDoubleFromParameterServer(n,"/first_goal_configuration/execution_time",execution_time);	
+	
+	return initGoal(joints, positions, velocities, executions_time);
 }	
 
 bool RobotArm::waitForActionServer(){
@@ -72,21 +71,45 @@ bool RobotArm::waitForActionServer(){
 }
 
 bool RobotArm::startTrajectory(pr2_controllers_msgs::JointTrajectoryGoal& goal){
-    goal.trajectory.header.stamp = ros::Time::now() + ros::Duration(1.0);
-    trajectory_client_->sendGoal(goal);
-	return true;
+	//Wozu brauch man das?!?
+	return trajectory_client_->sendGoal(goal);
 }
 
 bool RobotArm::startTrajectory(){
-
-	trajectory_client_->sendGoal(goal_);
-	return true;
+	return trajectory_client_->sendGoal(goal_);
 }
 
 
 
 
+/*
+ * 
+	vector<string> joints;
+	joints.push_back("l_shoulder_pan_joint");
+    joints.push_back("l_shoulder_lift_joint");
+    joints.push_back("l_upper_arm_roll_joint");
+    joints.push_back("l_elbow_flex_joint");
+    joints.push_back("l_forearm_roll_joint");
+    joints.push_back("l_wrist_flex_joint");
+    joints.push_back("l_wrist_roll_joint");
 
+	std::vector<double> position;
+	position.push_back(1.05);
+	position.push_back(0.1);
+	position.push_back(0.61);
+	position.push_back(-0.44);
+	position.push_back(-5.6);
+	position.push_back(-0.86);
+	position.push_back(0.16);
+	
+	std::vector<double> velocities;
+	velocities.push_back(0.0);
+	velocities.push_back(0.0);
+	velocities.push_back(0.0);
+	velocities.push_back(0.0);
+	velocities.push_back(0.0);
+	velocities.push_back(0.0);
+	velocities.push_back(0.0);	*/
 
 
 

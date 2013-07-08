@@ -4,12 +4,17 @@
 
 void IaiSeminarMultiJointPositionController::command_callback(const std_msgs::Float64MultiArrayConstPtr& msg)
 {
-
+	if(this->command_mutex_.try_lock())
+	{
+		this->position_command_buffer_ = msg->data;
+		this->command_mutex_.unlock();
+	}
 }
 
 void IaiSeminarMultiJointPositionController::copy_from_command_buffer()
 {
-
+	this->position_command_ = this->position_command_buffer_;
+	this->position_command_buffer_.clear();
 }
 
 bool IaiSeminarMultiJointPositionController::init(pr2_mechanism_model::RobotState *robot, ros::NodeHandle& n)
@@ -48,6 +53,12 @@ void IaiSeminarMultiJointPositionController::starting()
 
 void IaiSeminarMultiJointPositionController::update()
 {
+	if(this->command_mutex_.try_lock())
+	{
+		this->copy_from_command_buffer();
+		this->command_mutex_.unlock();
+	}
+
 	if(this->realtime_publisher_.trylock())
 	{
 		// Update current position of joints

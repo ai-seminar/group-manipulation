@@ -2,6 +2,8 @@
 #include "../../iai_seminar_manipulation_utils/include/iai_seminar_manipulation_utils/ParameterServerUtils.h"
 #include "../include/iai_seminar_manipulation_controllers/IAISeminarMultiJointPositionController.h"
 
+using namespace std;
+
 void IaiSeminarMultiJointPositionController::command_callback(const std_msgs::Float64MultiArrayConstPtr& msg)
 {
 	if(this->command_mutex_.try_lock())
@@ -20,12 +22,10 @@ void IaiSeminarMultiJointPositionController::copy_from_command_buffer()
 bool IaiSeminarMultiJointPositionController::init(pr2_mechanism_model::RobotState *robot, ros::NodeHandle& n)
 {
 	this->robot_ = robot;
-	
 	std::vector<std::string> joints;
-
-	// Load joints
-	loadStringVectorFromParameterServer(n, "joints", joints);
 	
+	// Load joints
+	loadStringVectorFromParameterServer(n, "/joints", joints);
 	for(size_t i=0; i < joints.size(); ++i)
 	{
 		pr2_mechanism_model::JointState* js = robot->getJointState(joints[i]);
@@ -36,12 +36,30 @@ bool IaiSeminarMultiJointPositionController::init(pr2_mechanism_model::RobotStat
 			return false;
 		}
 		this->joints_.push_back(js);
+		
+		
+		control_toolbox::Pid pid;
+		cout << "1\n" ;
+		if (!pid.initParam(n.getNamespace()+"/gains/"+joints[i])){
+			ROS_ERROR("IaiSeminarMultiJointPositionController could not construct PID controller for joint", joints[i].c_str());
+			return false;		
+		}
+		pids_.push_back(pid);
+		/*double p = 0;
+		double i = 0;
+		double d = 0;
+		double imax = 0;
+		double imin = 0;
+		pids_[i].getGains(p,i,d,imax,imin);
+		cout << "p: " << p << endl;*/
 	}
 
 	// Initialize realtime_publisher
 	this->realtime_publisher_.init(n, "state", this->joints_.size());
 	this->realtime_publisher_.msg_.joint_names = joints;
 
+
+	cout << "init ende\n";
 	return true;
 }
 

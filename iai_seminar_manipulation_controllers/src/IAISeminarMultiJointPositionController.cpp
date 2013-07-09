@@ -1,41 +1,36 @@
 #include <pluginlib/class_list_macros.h>
-#include "../../iai_seminar_manipulation_utils/include/iai_seminar_manipulation_utils/ParameterServerUtils.h"
-#include "../include/iai_seminar_manipulation_controllers/IAISeminarMultiJointPositionController.h"
+#include <../../iai_seminar_manipulation_utils/include/iai_seminar_manipulation_utils/ParameterServerUtils.h>
+#include <../include/iai_seminar_manipulation_controllers/IAISeminarMultiJointPositionController.h>
 
 using namespace std;
 
-ros::NodeHandle nh;
+boost::mutex m;
+vector<double> muh;
 
 
 
 void IaiSeminarMultiJointPositionController::command_callback(const std_msgs::Float64MultiArrayConstPtr& msg)
 {
-	cout << "dsdasd \n" ;
-	if(command_mutex_.try_lock())
-	{
-		cout << "hier callback?\n";
-		position_command_buffer_ = msg->data;
-		cout << "hier cdsadsallback?\n";
-		command_mutex_.unlock();
-		cout << "hier callbadsadasck?\n";
-	}
+
+	cout << "neue befehle empfangen \n" ;
+	boost::mutex::scoped_lock lock(m);
+	muh = msg->data;
+
 }
 
 void IaiSeminarMultiJointPositionController::copy_from_command_buffer()
 {
-	position_command_ = position_command_buffer_;
-	position_command_buffer_.clear();
+	boost::mutex::scoped_lock lock(m);
+	position_command_ = muh;
 }
 
 bool IaiSeminarMultiJointPositionController::init(pr2_mechanism_model::RobotState *robot, ros::NodeHandle& n)
 {
-	//nh = n;
 	robot_ = robot;
 	std::vector<std::string> joints;
 	
-	// Load joints
+	// lade joints
 	loadStringVectorFromParameterServer(n, "/joints", joints);
-	cout << joints.size() << endl;
 	for(size_t i=0; i < joints.size(); ++i)
 	{
 		pr2_mechanism_model::JointState* js = robot->getJointState(joints[i]);
@@ -54,67 +49,79 @@ bool IaiSeminarMultiJointPositionController::init(pr2_mechanism_model::RobotStat
 			return false;		
 		}
 		pids_.push_back(pid);
-		/*double p = 0;
-		double i = 0;
-		double d = 0;
-		double imax = 0;
-		double imin = 0;
-		pids_[i].getGains(p,i,d,imax,imin);
-		cout << "p: " << p << endl;*/
+		position_command_.push_back(0);
 	}
 
-	// Initialize realtime_publisher
-	realtime_publisher_.init(n, "state", joints_.size());
+	//initialisiere realtime_publisher
+	realtime_publisher_.init(n, "state", 4);
 	realtime_publisher_.msg_.joint_names = joints;
-
+	realtime_publisher_.msg_.actual.positions.resize(joints.size());
+	realtime_publisher_.msg_.actual.velocities.resize(joints.size());
+	realtime_publisher_.msg_.desired.positions.resize(joints.size());
+	realtime_publisher_.msg_.error.positions.resize(joints.size());
+	
+	//starte command-listener
+	IaiSeminarMultiJointPositionController bla;
+	command_subscriber_ = n.subscribe(n.getNamespace()+"/command", 1, &IaiSeminarMultiJointPositionController::command_callback, &bla);
+	
 	return true;
 }
 
 void IaiSeminarMultiJointPositionController::starting()
-{
+{	
 	for(size_t i=0; i < pids_.size(); ++i){
+		//reset pids 
 		pids_[i].reset();
+		
+		//error was zuweisen.. weil sonst irgendwie alles kaputt geht
 		error_.push_back(0);
+		
+		//0 ist sinnvoll!..?
+
 	}
+	cout << "started" << endl;
+	//Startzeit merken
 	last_time_ = robot_->getTime();
 }
 
 
 void IaiSeminarMultiJointPositionController::update()
 {
-	cout << "spam" << endl;
-	if(command_mutex_.try_lock())
-	{
-		copy_from_command_buffer();
-		command_mutex_.unlock();
-	}
-	//IaiSeminarMultiJointPositionController bla;
-	cout << "dasda\n" ;
-	//command_subscriber_ = nh.subscribe("/command", 1, &IaiSeminarMultiJointPositionController::command_callback, &bla);
-	cout << ":(\n" ;
+	copy_from_command_buffer();
+	
 	if(realtime_publisher_.trylock())
 	{
-		// Update current position of joints
+		//if (updatecounter == 10){
+		//	cout << "pup";
+		// Update current position of joints	
+		
+		
 		for(size_t i=0; i < joints_.size(); ++i)
 		{
-			cout << "hier?\n";
-			realtime_publisher_.msg_.actual.positions.push_back(joints_[i]->position_);
-			realtime_publisher_.msg_.actual.velocities.push_back(joints_[i]->velocity_);
-			cout << "hier2?\n";
-			double desired_pos = 0//position_command_[i];
-			double current_pos = 0//joints_[i]->position_;
-			cout << "hier3?\n";
+			double desired_pos = position_command_[i];
+			double current_pos = joints_[i]->position_;
+			
 			ros::Duration dt = robot_->getTime() - last_time_;
 			last_time_ = robot_->getTime();
-			cout << "hier4?\n";
+			
 			pids_[i].updatePid(error_[i], dt);
 			error_[i] =current_pos-desired_pos;
-			cout << "nein\n";
 			
+			joints_[i]->commanded_effort_ = -7 * error_[i];
+			
+			//publish Status
+			
+			realtime_publisher_.msg_.actual.positions[i] = joints_[i]->position_;
+			realtime_publisher_.msg_.actual.velocities[i] = joints_[i]->velocity_;
+			realtime_publisher_.msg_.desired.positions[i] = position_command_[i];	
+			realtime_publisher_.msg_.error.positions[i] = error_[i];
 		}
 		// Publish
+		//updatecounter =0;
+		//} else updatecounter++;
 		realtime_publisher_.unlockAndPublish();
 	}
+
 }
 
 void IaiSeminarMultiJointPositionController::stopping()

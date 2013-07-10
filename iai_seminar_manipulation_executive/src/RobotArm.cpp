@@ -45,8 +45,8 @@ bool RobotArm::initGoal(const std::vector<std::string>& joint_names, const std::
 
 bool RobotArm::initGoal(ros::NodeHandle& n){
 	//get joints
-	std::vector<std::string>joint;
-	loadStringVectorFromParameterServer(n,"/first_goal_configuration/joints",joint);
+	std::vector<std::string>joints;
+	loadStringVectorFromParameterServer(n,"/first_goal_configuration/joints",joints);
 
 	//get positions
 	std::vector<double>positions;

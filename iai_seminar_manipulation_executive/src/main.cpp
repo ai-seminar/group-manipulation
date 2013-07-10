@@ -14,7 +14,7 @@ int main(int argc, char **argv){
 
 	RobotArm armi(n,"muh");
 	armi.waitForActionServer();
-	armi.initGoal();
+	armi.initGoal(n);
 	armi.startTrajectory();
 	// Wait for trajectory completion
 	while(!armi.getState().isDone() && ros::ok())

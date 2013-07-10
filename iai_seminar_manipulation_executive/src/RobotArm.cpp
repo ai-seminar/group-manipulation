@@ -60,7 +60,7 @@ bool RobotArm::initGoal(ros::NodeHandle& n){
 	double execution_time;
 	loadDoubleFromParameterServer(n,"/first_goal_configuration/execution_time",execution_time);	
 	
-	return initGoal(joints, positions, velocities, executions_time);
+	return initGoal(joints, positions, velocities, execution_time);
 }	
 
 bool RobotArm::waitForActionServer(){
@@ -72,9 +72,26 @@ bool RobotArm::waitForActionServer(){
 
 bool RobotArm::startTrajectory(pr2_controllers_msgs::JointTrajectoryGoal& goal){
 	//Wozu brauch man das?!?
-	return trajectory_client_->sendGoal(goal);
+	trajectory_client_->sendGoal(goal);
+	return true;
 }
 
 bool RobotArm::startTrajectory(){
-	return trajectory_client_->sendGoal(goal_);
+	trajectory_client_->sendGoal(goal_);
+	return true;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

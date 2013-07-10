@@ -57,7 +57,6 @@ bool IaiSeminarMultiJointPositionController::init(pr2_mechanism_model::RobotStat
 	realtime_publisher_.msg_.error.positions.resize(joints.size());
 	
 	//starte command-listener
-	//IaiSeminarMultiJointPositionController bla;
 	command_subscriber_ = n.subscribe(n.getNamespace()+"/command", 1, &IaiSeminarMultiJointPositionController::command_callback, &*this);
 	return true;
 }

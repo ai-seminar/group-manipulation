@@ -11,6 +11,7 @@ RobotArm::RobotArm(ros::NodeHandle& n, const std::string& name){
 
 bool RobotArm::initGoal(const std::vector<std::string>& joint_names, const std::vector<double>& joint_goals,
                 const std::vector<double>& joint_goal_velocities, double duration){
+					
     // First, the joint names, which apply to all waypoints
 	for (std::vector<std::string>::const_iterator it = joint_names.begin() ; it != joint_names.end(); ++it){
 		goal_.trajectory.joint_names.push_back(*it);
@@ -38,7 +39,6 @@ bool RobotArm::initGoal(const std::vector<std::string>& joint_names, const std::
     goal_.trajectory.points[ind].time_from_start = ros::Duration(1.0);
 
 	goal_.trajectory.header.stamp = ros::Time::now() + ros::Duration(duration);
-    //we are done; return the goal
     
 	return true;
 }
@@ -78,42 +78,3 @@ bool RobotArm::startTrajectory(pr2_controllers_msgs::JointTrajectoryGoal& goal){
 bool RobotArm::startTrajectory(){
 	return trajectory_client_->sendGoal(goal_);
 }
-
-
-
-
-/*
- * 
-	vector<string> joints;
-	joints.push_back("l_shoulder_pan_joint");
-    joints.push_back("l_shoulder_lift_joint");
-    joints.push_back("l_upper_arm_roll_joint");
-    joints.push_back("l_elbow_flex_joint");
-    joints.push_back("l_forearm_roll_joint");
-    joints.push_back("l_wrist_flex_joint");
-    joints.push_back("l_wrist_roll_joint");
-
-	std::vector<double> position;
-	position.push_back(1.05);
-	position.push_back(0.1);
-	position.push_back(0.61);
-	position.push_back(-0.44);
-	position.push_back(-5.6);
-	position.push_back(-0.86);
-	position.push_back(0.16);
-	
-	std::vector<double> velocities;
-	velocities.push_back(0.0);
-	velocities.push_back(0.0);
-	velocities.push_back(0.0);
-	velocities.push_back(0.0);
-	velocities.push_back(0.0);
-	velocities.push_back(0.0);
-	velocities.push_back(0.0);	*/
-
-
-
-
-
-
-

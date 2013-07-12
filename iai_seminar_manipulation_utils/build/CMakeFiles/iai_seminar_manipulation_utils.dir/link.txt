@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC -O2 -g  -pthread   -shared -Wl,-soname,libiai_seminar_manipulation_utils.so -o ../lib/libiai_seminar_manipulation_utils.so CMakeFiles/iai_seminar_manipulation_utils.dir/src/ParameterServerUtils.o -L/opt/ros/fuerte/lib -lroscpp -lrostime -lrosconsole -lroscpp_serialization -lxmlrpcpp -Wl,-rpath,/opt/ros/fuerte/lib 
